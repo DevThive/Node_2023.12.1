@@ -23,15 +23,16 @@ export class UsersRepository {
   };
 
   // nickname 중복 확인
-  //   existsNickname = async (nickname) => {
-  //     const existsNickname = await prisma.users.findUnique({
-  //       where: {
-  //         nickname,
-  //       },
-  //     });
-  //     return existsNickname;
-  //   };
+  existsNickname = async (nickname) => {
+    const existsNickname = await prisma.users.findUnique({
+      where: {
+        nickname,
+      },
+    });
+    return existsNickname;
+  };
 
+  // login
   authLogin = async (email) => {
     const authLogin = await prisma.users.findUnique({
       where: {

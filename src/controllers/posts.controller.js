@@ -15,11 +15,11 @@ export class PostsController {
   //게시글 생성
   createPost = async (req, res, next) => {
     try {
-      const { nickname, password, title, content } = req.body;
+      const { title, content } = req.body;
+      const { nickname } = res.locals.user;
 
       const createPost = await this.postsService.createPost(
         nickname,
-        password,
         title,
         content
       );
@@ -36,6 +36,7 @@ export class PostsController {
   getOne = async (req, res, next) => {
     try {
       const { postId } = req.params;
+
       const onePost = await this.postsService.findOnePost(Number(postId));
 
       return res.status(200).json({ data: onePost });
@@ -48,7 +49,13 @@ export class PostsController {
   deletePost = async (req, res, next) => {
     try {
       const { postId } = req.params;
-      const deletePost = await this.postsService.findDeletePost(Number(postId));
+      const { nickname } = res.locals.user;
+
+      const deletePost = await this.postsService.findDeletePost(
+        res,
+        Number(postId),
+        nickname
+      );
 
       return res
         .status(200)
@@ -63,11 +70,14 @@ export class PostsController {
     try {
       const { postId } = req.params;
       const { title, content } = req.body;
+      const { nickname } = res.locals.user;
 
       const putPost = await this.postsService.findPutPost(
+        res,
         Number(postId),
         title,
-        content
+        content,
+        nickname
       );
 
       return res
