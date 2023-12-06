@@ -6,11 +6,10 @@ export class PostsRepository {
     return posts;
   };
 
-  createPost = async (nickname, password, title, content) => {
+  createPost = async (nickname, title, content) => {
     const createdPost = await prisma.posts.create({
       data: {
         nickname,
-        password,
         title,
         content,
       },
@@ -24,6 +23,14 @@ export class PostsRepository {
     });
 
     return findPost;
+  };
+
+  authPost = async (postId) => {
+    const authPost = await prisma.posts.findUnique({
+      where: { postId: postId },
+    });
+
+    return authPost;
   };
 
   findDeletePost = async (postId) => {

@@ -1,9 +1,9 @@
 // const jwt = require("jsonwebtoken");
 // import { Users } = ("../models");
+import { prisma } from "../utils/prisma/index.js";
+import jwt from "jsonwebtoken";
 
-require("dotenv").config();
-
-export default function (req, res, next) {
+export function authMiddleware(req, res, next) {
   const key = process.env.ACCESS_TOKEN_SECRET;
   const { authorization } = req.headers;
   const [authType, authToken] = (authorization ?? "").split(" ");
@@ -21,7 +21,7 @@ export default function (req, res, next) {
   try {
     // 요청 헤더에 저장된 토큰(req.headers.authorization)과 비밀키
     const { userId } = jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET);
-    Users.findByPk(userId).then((user) => {
+    prisma.users.findUnique({ where: { userId } }).then((user) => {
       res.locals.user = user;
       next();
     });

@@ -23,10 +23,9 @@ export class PostsService {
   };
 
   //게시글 생성
-  createPost = async (nickname, password, title, content) => {
+  createPost = async (nickname, title, content) => {
     const createdPost = await this.postsRepository.createPost(
       nickname,
-      password,
       title,
       content
     );
@@ -48,13 +47,29 @@ export class PostsService {
     return findPost;
   };
 
-  findDeletePost = async (postId) => {
+  findDeletePost = async (res, postId, nickname) => {
+    const authPost = await this.postsRepository.authPost(postId);
+
+    if (nickname !== authPost.nickname) {
+      return res
+        .status(400)
+        .json({ message: "등록한 사용자만 삭제가 가능합니다." });
+    }
+
     const deletePost = await this.postsRepository.findDeletePost(postId);
 
     return deletePost;
   };
 
-  findPutPost = async (postId, title, content) => {
+  findPutPost = async (res, postId, title, content, nickname) => {
+    const authPost = await this.postsRepository.authPost(postId);
+
+    if (nickname !== authPost.nickname) {
+      return res
+        .status(400)
+        .json({ message: "등록한 사용자만 삭제가 가능합니다." });
+    }
+
     const putPost = await this.postsRepository.findPutPost(
       postId,
       title,
