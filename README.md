@@ -10,7 +10,7 @@ ACCESS_TOKEN_SECRET : jwt AccessToken 암호키
 
 # 실행 방법
 
-npm install
+npm install /br
 npm run dev
 
 1. Class와 Instance가 각각 무엇인지 설명해주세요
