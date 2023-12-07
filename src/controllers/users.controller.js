@@ -7,7 +7,6 @@ export class UsersController {
       const { email, nickname, password, confirmpassword } = req.body;
 
       const users = await this.usersService.signupUser(
-        res,
         email,
         nickname,
         password,
@@ -26,7 +25,7 @@ export class UsersController {
     try {
       const { email, password } = req.body;
 
-      const authLogin = await this.usersService.authLogin(email, password, res);
+      const authLogin = await this.usersService.authLogin(email, password);
 
       return res.status(200).json({ token: `Bearer ${authLogin}` });
     } catch (err) {

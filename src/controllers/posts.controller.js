@@ -52,7 +52,6 @@ export class PostsController {
       const { nickname } = res.locals.user;
 
       const deletePost = await this.postsService.findDeletePost(
-        res,
         Number(postId),
         nickname
       );
@@ -73,7 +72,6 @@ export class PostsController {
       const { nickname } = res.locals.user;
 
       const putPost = await this.postsService.findPutPost(
-        res,
         Number(postId),
         title,
         content,

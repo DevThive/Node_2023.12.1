@@ -33,9 +33,9 @@ export class PostsRepository {
     return authPost;
   };
 
-  findDeletePost = async (postId) => {
+  findDeletePost = async (postId, nickname) => {
     const deletePost = await prisma.posts.delete({
-      where: { postId: postId },
+      where: { postId: +postId, nickname: nickname },
     });
 
     return deletePost;
