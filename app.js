@@ -8,7 +8,7 @@ import ErrorHandlingMiddlewqare from "./src/middlewares/error-handling.middlewar
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const PORT = 3017;
+const PORT = process.env.PORT;
 
 app.use(LogMiddleware);
 app.use(express.json());
