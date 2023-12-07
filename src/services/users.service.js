@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export class UsersService {
   usersRepository = new UsersRepository();
 
-  signupUser = async (res, email, nickname, password, confirmpassword) => {
+  signupUser = async (email, nickname, password, confirmpassword) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
@@ -19,42 +19,26 @@ export class UsersService {
 
     const existsEmail = await this.usersRepository.existsEmail(email);
 
+    // 이메일 닉네임 존재하는지 확인
+    if (existsEmail) throw new Error("Email이 이미 사용중입니다.");
+
     const existsNickname = await this.usersRepository.existsNickname(nickname);
-
-    //   // 이메일 닉네임 존재하는지 확인
-    if (existsEmail) {
-      return res
-        .status(400)
-        .json({ errorMessage: "Email 중복을 확인해주세요." });
-    }
-
     // 닉네임 중복 확인
-    if (existsNickname) {
-      return res
-        .status(400)
-        .json({ errorMessage: "Nickname 중복을 확인해주세요." });
-    }
+    if (existsNickname) throw new Error("Nickname이 이미 사용중입니다.");
 
     //이메일 형식 확인
-    if (!regEmail.test(email)) {
-      return res
-        .status(400)
-        .json({ errorMessage: "Email 형식을 확인해주세요." });
-    }
+    if (!regEmail.test(email))
+      throw new Error("Email 형식이 올바르지 않습니다.");
 
     //패스워드 형식 확인
-    if (!pwRef.test(password)) {
-      return res
-        .status(400)
-        .json({ errorMessage: "Password 형식을 확인해주세요." });
-    }
+    if (!pwRef.test(password))
+      throw new Error("password형식이 올바르지 않습니다.");
 
     console.log(password, confirmpassword);
 
     // confirmpassword 일치 확인
-    if (password !== confirmpassword) {
-      return res.status(400).json({ message: "패스워드가 일치하지 않습니다." });
-    }
+    if (password !== confirmpassword)
+      throw new Error("패스워드가 일치하지 않습니다.");
 
     const users = await this.usersRepository.signupUser(email, nickname, hash);
 
@@ -78,12 +62,11 @@ export class UsersService {
 
   //로그인
 
-  authLogin = async (email, password, res) => {
+  authLogin = async (email, password) => {
     const loginInfo = await this.usersRepository.authLogin(email);
 
     if (!loginInfo) {
-      res.status(400).json({ message: "등록된 Email이 없습니다." });
-      return false;
+      throw new Error("등록된 Eamil이 없습니다.");
     }
     const isPasswordCorrect = await bcrypt.compare(
       password,
@@ -91,9 +74,9 @@ export class UsersService {
     );
 
     if (!isPasswordCorrect) {
-      res.status(400).json({ message: "패스워드를 확인해주세요" });
-      return false;
+      throw new Error("Password를 다시 확인해주세요.");
     }
+    쥬쥬;
 
     const token = jwt.sign(
       {

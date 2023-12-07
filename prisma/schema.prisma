@@ -11,7 +11,7 @@ datasource db {
 
 model Posts {
   postId    Int      @id @default(autoincrement()) @map("postId")
-  nickname  String   @map("nicknmae")
+  nickname  String   @map("nickname")
   title     String   @map("title")
   content   String   @map("content") @db.Text
   createdAt DateTime @default(now()) @map("createdAt")

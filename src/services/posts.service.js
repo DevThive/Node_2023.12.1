@@ -47,16 +47,18 @@ export class PostsService {
     return findPost;
   };
 
-  findDeletePost = async (res, postId, nickname) => {
+  findDeletePost = async (postId, nickname) => {
     const authPost = await this.postsRepository.authPost(postId);
 
-    if (nickname !== authPost.nickname) {
-      return res
-        .status(400)
-        .json({ message: "등록한 사용자만 삭제가 가능합니다." });
-    }
+    if (!authPost) throw new Error("존재하지 않는 게시글 입니다.");
 
-    const deletePost = await this.postsRepository.findDeletePost(postId);
+    if (nickname !== authPost.nickname)
+      throw new Error("등록한 사용자만 삭제 가능합니다.");
+
+    const deletePost = await this.postsRepository.findDeletePost(
+      postId,
+      nickname
+    );
 
     return deletePost;
   };
@@ -64,11 +66,10 @@ export class PostsService {
   findPutPost = async (res, postId, title, content, nickname) => {
     const authPost = await this.postsRepository.authPost(postId);
 
-    if (nickname !== authPost.nickname) {
-      return res
-        .status(400)
-        .json({ message: "등록한 사용자만 삭제가 가능합니다." });
-    }
+    if (!authPost) throw new Error("존재하지 않는 게시글입니다.");
+
+    if (nickname !== authPost.nickname)
+      throw new Error("등록한 사용자만 삭제가 가능합니다.");
 
     const putPost = await this.postsRepository.findPutPost(
       postId,
