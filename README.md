@@ -5,13 +5,18 @@
 # 환경변수
 
 PORT : 포트 번호
+
 DATABASE_URL : prisma 사용을 위한 DB URL
+
 ACCESS_TOKEN_SECRET : jwt AccessToken 암호키
 
 # 실행 방법
 
-npm install /br
+npm install
+
 npm run dev
+
+# 더 고민해 보기
 
 1. Class와 Instance가 각각 무엇인지 설명해주세요
    class는 객체를 만드는 틀을 말합니다.
