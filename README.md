@@ -46,3 +46,37 @@ npm run dev
    단위 테스트 : 하나의 모듈을 기준으로 독립적으로 진행하는 테스트입니다.
    통합 테스트 : 일반적으로 여러 개의 모듈들로 구성이 되어 있으며, 두개 이상의 모듈이 연결된 상태에서 테스트 하는 것을 말합니다.
    E2E 테스트 : 사용자가 사용하는 환경과 거의 동일 하게 테스틑 하는 것을 말합니다.
+
+# 실행
+
+배포 주소 : 3.39.189.53:3000
+
+1. 회원가입
+
+주소 : /api/users
+
+데이터 : email, nickname, password, confirmpassword
+
+2. 로그인
+
+주소 : /api/users/auth
+
+데이터 : email, password
+
+결과 : Beare {token}값
+
+3. 게시글 조회
+
+주소(GET) : /api/posts
+
+4. 상세내용 조회
+
+주소(GET) : /api/posts/:postId
+
+5. 게시글 수정
+
+주소(PUT) : /api/posts/:postId
+
+6. 게시글 삭제
+
+주소(DELETE) : /api/posts/:postId
