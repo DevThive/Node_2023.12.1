@@ -77,6 +77,8 @@ npm run dev
 
 주소(PUT) : /api/posts/:postId
 
+데이터 : title, content
+
 6. 게시글 삭제
 
 주소(DELETE) : /api/posts/:postId
