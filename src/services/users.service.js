@@ -76,7 +76,6 @@ export class UsersService {
     if (!isPasswordCorrect) {
       throw new Error("Password를 다시 확인해주세요.");
     }
-    쥬쥬;
 
     const token = jwt.sign(
       {

@@ -4,7 +4,9 @@ import express from "express";
 import router from "./src/routes/index.js";
 import LogMiddleware from "./src/middlewares/log.middleware.js";
 import ErrorHandlingMiddlewqare from "./src/middlewares/error-handling.middleware.js";
+import * as dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
