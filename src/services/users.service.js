@@ -87,7 +87,7 @@ export class UsersService {
       }
     );
 
-    res.header("Authorization", `Bearer ${token}`);
+    //res.header("Authorization", `Bearer ${token}`);
 
     return token;
   };
